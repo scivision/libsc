@@ -1,0 +1,291 @@
+#ifndef _SRC_SC_CONFIG_H
+#define _SRC_SC_CONFIG_H 1
+
+/* C compiler */
+#ifndef SC_CC
+#define SC_CC @SC_CC@
+#endif
+
+/* C compiler flags */
+#ifndef SC_CFLAGS
+#define SC_CFLAGS @SC_CFLAGS@
+#endif
+
+/* C preprocessor */
+#ifndef SC_CPP
+#define SC_CPP @SC_CPP@
+#endif
+
+/* C preprocessor flags */
+#ifndef SC_CPPFLAGS
+#define SC_CPPFLAGS @SC_CPPFLAGS@
+#endif
+
+
+/* Undefine if: use aligned malloc (optionally use --enable-memalign=<bytes>) */
+#ifndef SC_ENABLE_MEMALIGN
+#cmakedefine01 SC_ENABLE_MEMALIGN
+#endif
+
+/* Define to 1 if we are using MPI */
+#ifndef SC_ENABLE_MPI
+#cmakedefine01 SC_ENABLE_MPI
+#endif
+
+/* Define to 1 if we can use MPI_COMM_TYPE_SHARED */
+#ifndef SC_ENABLE_MPICOMMSHARED
+#cmakedefine01 SC_ENABLE_MPICOMMSHARED
+#endif
+
+/* Define to 1 if we are using MPI I/O */
+#ifndef SC_ENABLE_MPIIO
+#cmakedefine01 SC_ENABLE_MPIIO
+#endif
+
+/* Define to 1 if we are using MPI_Init_thread */
+#ifndef SC_ENABLE_MPITHREAD
+#cmakedefine01 SC_ENABLE_MPITHREAD
+#endif
+
+/* Define to 1 if we can use MPI_Win_allocate_shared */
+#ifndef SC_ENABLE_MPIWINSHARED
+#cmakedefine01 SC_ENABLE_MPIWINSHARED
+#endif
+
+/* Undefine if: disable non-thread-safe internal debug counters */
+#ifndef SC_ENABLE_USE_COUNTERS
+#define SC_ENABLE_USE_COUNTERS 1
+#endif
+
+/* Undefine if: replace array/dmatrix resize with malloc/copy/free */
+#ifndef SC_ENABLE_USE_REALLOC
+#cmakedefine01 SC_ENABLE_USE_REALLOC
+#endif
+
+/* Define to 1 if you have the `aligned_alloc' function. */
+#ifndef SC_HAVE_ALIGNED_ALLOC
+#cmakedefine01 SC_HAVE_ALIGNED_ALLOC
+#endif
+
+/* Define to 1 if you have the `backtrace' function. */
+#ifndef SC_HAVE_BACKTRACE
+#cmakedefine01 SC_HAVE_BACKTRACE
+#endif
+
+/* Define to 1 if you have the `backtrace_symbols' function. */
+#ifndef SC_HAVE_BACKTRACE_SYMBOLS
+#cmakedefine01 SC_HAVE_BACKTRACE_SYMBOLS
+#endif
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#ifndef SC_HAVE_DLFCN_H
+#cmakedefine01 SC_HAVE_DLFCN_H
+#endif
+
+/* Define to 1 if you have the <execinfo.h> header file. */
+#ifndef SC_HAVE_EXECINFO_H
+#cmakedefine SC_HAVE_EXECINFO_H
+#endif
+
+/* Define to 1 if you have the `fsync' function. */
+#ifndef SC_HAVE_FSYNC
+#cmakedefine01 SC_HAVE_FSYNC
+#endif
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#ifndef SC_HAVE_INTTYPES_H
+#cmakedefine01 SC_HAVE_INTTYPES_H
+#endif
+
+
+/* Define to 1 if you have the <memory.h> header file. */
+#ifndef SC_HAVE_MEMORY_H
+#cmakedefine01 SC_HAVE_MEMORY_H
+#endif
+
+
+
+/* Define to 1 if you have the `posix_memalign' function. */
+#ifndef SC_HAVE_POSIX_MEMALIGN
+#cmakedefine01 SC_HAVE_POSIX_MEMALIGN
+#endif
+
+/* Define to 1 if you have the `qsort_r' function. */
+#ifndef SC_HAVE_QSORT_R
+#cmakedefine01 SC_HAVE_QSORT_R
+#endif
+
+/* Define to 1 if you have the <signal.h> header file. */
+#ifndef SC_HAVE_SIGNAL_H
+#cmakedefine SC_HAVE_SIGNAL_H
+#endif
+
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#ifndef SC_HAVE_STDINT_H
+#cmakedefine01 SC_HAVE_STDINT_H
+#endif
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#ifndef SC_HAVE_STDLIB_H
+#cmakedefine01 SC_HAVE_STDLIB_H
+#endif
+
+/* Define to 1 if you have the <strings.h> header file. */
+#ifndef SC_HAVE_STRINGS_H
+#cmakedefine01 SC_HAVE_STRINGS_H
+#endif
+
+/* Define to 1 if you have the <string.h> header file. */
+#ifndef SC_HAVE_STRING_H
+#cmakedefine01 SC_HAVE_STRING_H
+#endif
+
+/* Define to 1 if you have the `strtol' function. */
+#ifndef SC_HAVE_STRTOL
+#cmakedefine01 SC_HAVE_STRTOL
+#endif
+
+/* Define to 1 if you have the `strtoll' function. */
+#ifndef SC_HAVE_STRTOLL
+#cmakedefine01 SC_HAVE_STRTOLL
+#endif
+
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#ifndef SC_HAVE_SYS_STAT_H
+#cmakedefine01 SC_HAVE_SYS_STAT_H
+#endif
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#ifndef SC_HAVE_SYS_TIME_H
+#cmakedefine01 SC_HAVE_SYS_TIME_H
+#endif
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#ifndef SC_HAVE_SYS_TYPES_H
+#cmakedefine01 SC_HAVE_SYS_TYPES_H
+#endif
+
+/* Define to 1 if you have the <time.h> header file. */
+#ifndef SC_HAVE_TIME_H
+#cmakedefine01 SC_HAVE_TIME_H
+#endif
+
+
+/* desired alignment of allocations in bytes */
+#ifndef SC_MEMALIGN_BYTES
+#define SC_MEMALIGN_BYTES (SC_SIZEOF_VOID_P)
+#endif
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#ifndef SC_HAVE_UNISTD_H
+#cmakedefine01 SC_HAVE_UNISTD_H
+#endif
+
+/* Have we found function adler32_combine. */
+#ifndef SC_HAVE_ZLIB
+#cmakedefine01 SC_HAVE_ZLIB
+#endif
+
+/* Linker flags */
+#ifndef SC_LDFLAGS
+#define SC_LDFLAGS @SC_LDFLAGS@
+#endif
+
+/* Libraries */
+#ifndef SC_LIBS
+#define SC_LIBS @SC_LIBS@
+#endif
+
+
+/* Name of package */
+#ifndef SC_PACKAGE
+#define SC_PACKAGE "libsc"
+#endif
+
+/* Define to the address where bug reports for this package should be sent. */
+#ifndef SC_PACKAGE_BUGREPORT
+#define SC_PACKAGE_BUGREPORT "info@SC.org"
+#endif
+
+/* Define to the full name of this package. */
+#ifndef SC_PACKAGE_NAME
+#define SC_PACKAGE_NAME "libsc"
+#endif
+
+/* Define to the full name and version of this package. */
+#ifndef SC_PACKAGE_STRING
+#define SC_PACKAGE_STRING "libsc 2.8.1.57-a813"
+#endif
+
+/* Define to the one symbol short name of this package. */
+#ifndef SC_PACKAGE_TARNAME
+#define SC_PACKAGE_TARNAME "libsc"
+#endif
+
+/* Define to the home page for this package. */
+#ifndef SC_PACKAGE_URL
+#define SC_PACKAGE_URL ""
+#endif
+
+/* Define to the version of this package. */
+#ifndef SC_PACKAGE_VERSION
+#define SC_PACKAGE_VERSION "2.8.1.57-a813"
+#endif
+
+
+/* The size of `int', as computed by sizeof. */
+#ifndef SC_SIZEOF_INT
+#define SC_SIZEOF_INT @SC_SIZEOF_INT@
+#endif
+
+/* The size of `long', as computed by sizeof. */
+#ifndef SC_SIZEOF_LONG
+#define SC_SIZEOF_LONG @SC_SIZEOF_LONG@
+#endif
+
+/* The size of `long long', as computed by sizeof. */
+#ifndef SC_SIZEOF_LONG_LONG
+#define SC_SIZEOF_LONG_LONG @SC_SIZEOF_LONG_LONG@
+#endif
+
+/* The size of `unsigned long', as computed by sizeof. */
+#ifndef SC_SIZEOF_UNSIGNED_LONG
+#define SC_SIZEOF_UNSIGNED_LONG @SC_SIZEOF_UNSIGNED_LONG@
+#endif
+
+/* The size of `unsigned long long', as computed by sizeof. */
+#ifndef SC_SIZEOF_UNSIGNED_LONG_LONG
+#define SC_SIZEOF_UNSIGNED_LONG_LONG @SC_SIZEOF_UNSIGNED_LONG_LONG@
+#endif
+
+/* The size of `void *', as computed by sizeof. */
+#ifndef SC_SIZEOF_VOID_P
+#define SC_SIZEOF_VOID_P @SC_SIZEOF_VOID_P@
+#endif
+
+
+/* Version number of package */
+#ifndef SC_VERSION
+#define SC_VERSION "2.8.1.57-a813"
+#endif
+
+/* Package major version */
+#ifndef SC_VERSION_MAJOR
+#define SC_VERSION_MAJOR 2
+#endif
+
+/* Package minor version */
+#ifndef SC_VERSION_MINOR
+#define SC_VERSION_MINOR 8
+#endif
+
+/* Package point version */
+#ifndef SC_VERSION_POINT
+#define SC_VERSION_POINT 1.57-a813
+#endif
+
+
+/* once: _SRC_SC_CONFIG_H */
+#endif

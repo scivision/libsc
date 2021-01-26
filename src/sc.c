@@ -216,9 +216,11 @@ sc_signal_handler (int sig)
   case SIGSEGV:
     sigstr = "SEGV";
     break;
+#ifndef _WIN32
   case SIGUSR2:
     sigstr = "USR2";
     break;
+#endif
   default:
     sigstr = "<unknown>";
     break;
@@ -240,8 +242,10 @@ sc_set_signal_handler (int catch_signals)
     SC_CHECK_ABORT (system_int_handler != SIG_ERR, "catching INT");
     system_segv_handler = signal (SIGSEGV, sc_signal_handler);
     SC_CHECK_ABORT (system_segv_handler != SIG_ERR, "catching SEGV");
+#ifndef _WIN32
     system_usr2_handler = signal (SIGUSR2, sc_signal_handler);
     SC_CHECK_ABORT (system_usr2_handler != SIG_ERR, "catching USR2");
+#endif
     sc_signals_caught = 1;
   }
   else if (!catch_signals && sc_signals_caught) {
@@ -249,8 +253,10 @@ sc_set_signal_handler (int catch_signals)
     system_int_handler = NULL;
     (void) signal (SIGSEGV, system_segv_handler);
     system_segv_handler = NULL;
+#ifndef _WIN32
     (void) signal (SIGUSR2, system_usr2_handler);
     system_usr2_handler = NULL;
+#endif
     sc_signals_caught = 0;
   }
 }
