@@ -93,7 +93,9 @@
 #include <math.h>
 #include <ctype.h>
 #include <float.h>
+#ifndef _MSC_VER
 #include <libgen.h>
+#endif
 #include <limits.h>
 #include <stdarg.h>
 #include <stddef.h>
@@ -101,8 +103,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef SC_HAVE_UNISTD_H
 #include <unistd.h>
+#elif defined(_WIN32)
+#include  <BaseTsd.h>
+typedef SSIZE_T ssize_t;
+#endif
 
+#ifdef _MSC_VER
+  #define __attribute__(X)
+#endif
 /* provide extern C defines */
 
 /* The hacks below enable semicolons after the SC_EXTERN_C_ macros

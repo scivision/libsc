@@ -2,16 +2,17 @@ include(CheckIncludeFile)
 include(CheckSymbolExists)
 include(CheckTypeSize)
 
-target_sources(sc PRIVATE sc.c sc_mpi.c sc_containers.c sc_avl.c sc_string.c sc_unique_counter.c sc_options.c sc_functions.c sc_statistics.c sc_ranges.c sc_io.c sc_amr.c sc_search.c sc_sort.c sc_dmatrix.c sc_blas.c sc_lapack.c sc_bspline.c sc_flops.c sc_random.c sc_getopt.c sc_obstack.c sc_getopt1.c sc_keyvalue.c sc_refcount.c sc_warp.c sc_polynom.c sc_shmem.c sc_allgather.c sc_reduce.c sc_notify.c)
+target_sources(sc PRIVATE sc.c sc_mpi.c sc_containers.c sc_avl.c sc_string.c sc_unique_counter.c sc_functions.c sc_statistics.c sc_ranges.c sc_io.c sc_amr.c sc_search.c sc_sort.c sc_dmatrix.c sc_blas.c sc_lapack.c sc_bspline.c sc_flops.c sc_random.c sc_getopt.c sc_obstack.c sc_getopt1.c sc_keyvalue.c sc_refcount.c sc_warp.c sc_polynom.c sc_shmem.c sc_allgather.c sc_reduce.c sc_notify.c)
+if(NOT MSVC AND NOT (WIN32 AND CMAKE_C_COMPILER_ID STREQUAL Clang))
+  target_sources(sc PRIVATE sc_options.c)
+endif()
 
 # --- generate sc_config.h
 
 set(CMAKE_REQUIRED_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_BINARY_DIR}/include)
 
 if(ZLIB_FOUND)
-  set(CMAKE_REQUIRED_LIBRARIES ZLIB::ZLIB m)
-else()
-  set(CMAKE_REQUIRED_LIBRARIES m)
+  set(CMAKE_REQUIRED_LIBRARIES ZLIB::ZLIB)
 endif()
 
 if(MPI_FOUND)
@@ -22,6 +23,11 @@ else()
   set(SC_CC \"${CMAKE_C_COMPILER}\")
   set(SC_CPP ${CMAKE_C_COMPILER})
 endif()
+
+if(NOT WIN32)
+  set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} m)
+endif()
+
 string(APPEND SC_CPP " -E")
 set(SC_CPP \"${SC_CPP}\")
 

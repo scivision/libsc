@@ -210,12 +210,14 @@ sc_signal_handler (int sig)
   const char         *sigstr;
 
   switch (sig) {
+#ifndef _MSC_VER
   case SIGINT:
     sigstr = "INT";
     break;
   case SIGSEGV:
     sigstr = "SEGV";
     break;
+#endif
 #ifndef _WIN32
   case SIGUSR2:
     sigstr = "USR2";
@@ -238,10 +240,12 @@ static void
 sc_set_signal_handler (int catch_signals)
 {
   if (catch_signals && !sc_signals_caught) {
+#ifndef _MSC_VER
     system_int_handler = signal (SIGINT, sc_signal_handler);
     SC_CHECK_ABORT (system_int_handler != SIG_ERR, "catching INT");
     system_segv_handler = signal (SIGSEGV, sc_signal_handler);
     SC_CHECK_ABORT (system_segv_handler != SIG_ERR, "catching SEGV");
+#endif
 #ifndef _WIN32
     system_usr2_handler = signal (SIGUSR2, sc_signal_handler);
     SC_CHECK_ABORT (system_usr2_handler != SIG_ERR, "catching USR2");
@@ -249,10 +253,12 @@ sc_set_signal_handler (int catch_signals)
     sc_signals_caught = 1;
   }
   else if (!catch_signals && sc_signals_caught) {
+#ifndef _MSC_VER
     (void) signal (SIGINT, system_int_handler);
     system_int_handler = NULL;
     (void) signal (SIGSEGV, system_segv_handler);
     system_segv_handler = NULL;
+#endif
 #ifndef _WIN32
     (void) signal (SIGUSR2, system_usr2_handler);
     system_usr2_handler = NULL;
@@ -293,7 +299,11 @@ sc_log_handler (FILE * log_stream, const char *filename, int lineno,
     char                bn[BUFSIZ], *bp;
 
     snprintf (bn, BUFSIZ, "%s", filename);
+#ifdef _MSC_VER
+    _splitpath (bn, NULL, NULL, NULL, NULL);
+#else
     bp = basename (bn);
+#endif
     fprintf (log_stream, "%s:%d ", bp, lineno);
   }
 
@@ -956,8 +966,9 @@ sc_abort_handler (void)
 
   fflush (stdout);
   fflush (stderr);
+#ifndef _MSC_VER
   sleep (1);                    /* allow time for pending output */
-
+#endif
   if (sc_mpicomm != sc_MPI_COMM_NULL) {
     sc_MPI_Abort (sc_mpicomm, 1);       /* terminate all MPI processes */
   }
@@ -1006,7 +1017,9 @@ sc_abort_collective (const char *msg)
     SC_ABORT (msg);
   }
   else {
+#ifndef _MSC_VER
     sleep (3);                  /* wait for root rank's sc_MPI_Abort ()... */
+#endif
     abort ();                   /* ... otherwise this may call sc_MPI_Abort () */
   }
 }
