@@ -7,10 +7,15 @@ target_sources(sc PRIVATE sc.c sc_mpi.c sc_containers.c sc_avl.c sc_string.c sc_
 # --- generate sc_config.h
 
 set(CMAKE_REQUIRED_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_BINARY_DIR}/include)
-set(CMAKE_REQUIRED_LIBRARIES MPI::MPI_C ZLIB::ZLIB m)
 
+if(ZLIB_FOUND)
+  set(CMAKE_REQUIRED_LIBRARIES ZLIB::ZLIB m)
+else()
+  set(CMAKE_REQUIRED_LIBRARIES m)
+endif()
 
 if(MPI_FOUND)
+  set(CMAKE_REQUIRED_LIBRARIES MPI::MPI_C ${CMAKE_REQUIRED_LIBRARIES})
   set(SC_CC \"${MPI_C_COMPILER}\")
   set(SC_CPP ${MPI_C_COMPILER})
 else()
@@ -26,8 +31,9 @@ set(SC_CFLAGS \"${SC_CFLAGS}\")
 set(SC_CPPFLAGS \"\")
 
 set(SC_LDFLAGS \"${MPI_C_LINK_FLAGS}\")
-set(SC_LIBS \"${ZLIB_LIBRARIES} m\")
+set(SC_LIBS \"${ZLIB_LIBRARIES} ${BLAS_LIBRARIES} m\")
 
+set(SC_WITH_BLAS ${BLAS_FOUND})
 
 
 set(SC_ENABLE_MEMALIGN 1)
@@ -46,25 +52,24 @@ check_symbol_exists(aligned_alloc stdlib.h SC_HAVE_ALIGNED_ALLOC)
 check_symbol_exists(backtrace execinfo.h SC_HAVE_BACKTRACE)
 check_symbol_exists(backtrace_symbols execinfo.h SC_HAVE_BACKTRACE_SYMBOLS)
 
-check_include_file(dlfcn.h SC_HAVE_DLFCN_H)
+# check_include_file(dlfcn.h SC_HAVE_DLFCN_H)
 check_include_file(execinfo.h SC_HAVE_EXECINFO_H)
-check_symbol_exists(fsync unistd.h SC_HAVE_FSYNC)
-check_include_file(inttypes.h SC_HAVE_INTTYPES_H)
-
-check_include_file(memory.h SC_HAVE_MEMORY_H)
+# check_symbol_exists(fsync unistd.h SC_HAVE_FSYNC)
+# check_include_file(inttypes.h SC_HAVE_INTTYPES_H)
+# check_include_file(memory.h SC_HAVE_MEMORY_H)
 
 check_symbol_exists(posix_memalign stdlib.h SC_HAVE_POSIX_MEMALIGN)
-check_symbol_exists(qsort_r stdlib.h SC_HAVE_QSORT_R)
+# check_symbol_exists(qsort_r stdlib.h SC_HAVE_QSORT_R)
 check_include_file(signal.h SC_HAVE_SIGNAL_H)
-check_include_file(stdint.h SC_HAVE_STDINT_H)
-check_include_file(stdlib.h SC_HAVE_STDLIB_H)
-check_include_file(strings.h SC_HAVE_STRINGS_H)
-check_include_file(string.h SC_HAVE_STRING_H)
+# check_include_file(stdint.h SC_HAVE_STDINT_H)
+# check_include_file(stdlib.h SC_HAVE_STDLIB_H)
+# check_include_file(strings.h SC_HAVE_STRINGS_H)
+# check_include_file(string.h SC_HAVE_STRING_H)
 
-check_symbol_exists(strtol stdlib.h SC_HAVE_STRTOL)
+# check_symbol_exists(strtol stdlib.h SC_HAVE_STRTOL)
 check_symbol_exists(strtoll stdlib.h SC_HAVE_STRTOLL)
 
-check_include_file(sys/stat.h SC_HAVE_SYS_STAT_H)
+# check_include_file(sys/stat.h SC_HAVE_SYS_STAT_H)
 check_include_file(sys/time.h SC_HAVE_SYS_TIME_H)
 check_include_file(sys/types.h SC_HAVE_SYS_TYPES_H)
 check_include_file(times.h SC_HAVE_TIME_H)
@@ -74,11 +79,11 @@ check_symbol_exists(adler32_combine zlib.h SC_HAVE_ZLIB)
 
 
 
-check_type_size(int SC_SIZEOF_INT BUILTIN_TYPES_ONLY)
-check_type_size(long SC_SIZEOF_LONG BUILTIN_TYPES_ONLY)
-check_type_size("long long" SC_SIZEOF_LONG_LONG BUILTIN_TYPES_ONLY)
-check_type_size("unsigned long" SC_SIZEOF_UNSIGNED_LONG BUILTIN_TYPES_ONLY)
-check_type_size("unsigned long long" SC_SIZEOF_UNSIGNED_LONG_LONG BUILTIN_TYPES_ONLY)
+# check_type_size(int SC_SIZEOF_INT BUILTIN_TYPES_ONLY)
+# check_type_size(long SC_SIZEOF_LONG BUILTIN_TYPES_ONLY)
+# check_type_size("long long" SC_SIZEOF_LONG_LONG BUILTIN_TYPES_ONLY)
+# check_type_size("unsigned long" SC_SIZEOF_UNSIGNED_LONG BUILTIN_TYPES_ONLY)
+# check_type_size("unsigned long long" SC_SIZEOF_UNSIGNED_LONG_LONG BUILTIN_TYPES_ONLY)
 set(SC_SIZEOF_VOID_P ${CMAKE_SIZEOF_VOID_P})
 
 

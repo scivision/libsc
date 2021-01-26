@@ -1,5 +1,6 @@
 include(CheckCSourceCompiles)
 
+
 set(CMAKE_REQUIRED_INCLUDES ${PROJECT_SOURCE_DIR}/src/sc_builtin)
 set(CMAKE_REQUIRED_LIBRARIES)
 
@@ -15,7 +16,13 @@ endif()
 
 foreach(t ${tests})
   add_executable(test_${t} test_${t}.c)
-  target_link_libraries(test_${t} PRIVATE sc MPI::MPI_C ZLIB::ZLIB m)
+  target_link_libraries(test_${t} PRIVATE sc m)
+  if(ZLIB_FOUND)
+    target_link_libraries(test_${t} PRIVATE ZLIB::ZLIB)
+  endif()
+  if(MPI_FOUND)
+    target_link_libraries(test_${t} PRIVATE MPI::MPI_C)
+  endif()
 
-  add_test(NAME ${t} COMMAND $<TARGET_FILE:test_${t}>)
+  add_test(NAME sc:test:${t} COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} $<TARGET_FILE:test_${t}>)
 endforeach()

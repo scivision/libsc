@@ -21,172 +21,98 @@
 #define SC_CPPFLAGS @SC_CPPFLAGS@
 #endif
 
+#cmakedefine SC_WITH_BLAS
+
 
 /* Undefine if: use aligned malloc (optionally use --enable-memalign=<bytes>) */
-#ifndef SC_ENABLE_MEMALIGN
-#cmakedefine01 SC_ENABLE_MEMALIGN
-#endif
+#cmakedefine SC_ENABLE_MEMALIGN
 
 /* Define to 1 if we are using MPI */
-#ifndef SC_ENABLE_MPI
-#cmakedefine01 SC_ENABLE_MPI
-#endif
+#cmakedefine SC_ENABLE_MPI
 
 /* Define to 1 if we can use MPI_COMM_TYPE_SHARED */
-#ifndef SC_ENABLE_MPICOMMSHARED
-#cmakedefine01 SC_ENABLE_MPICOMMSHARED
-#endif
+#cmakedefine SC_ENABLE_MPICOMMSHARED
 
 /* Define to 1 if we are using MPI I/O */
-#ifndef SC_ENABLE_MPIIO
-#cmakedefine01 SC_ENABLE_MPIIO
-#endif
+#cmakedefine SC_ENABLE_MPIIO
 
 /* Define to 1 if we are using MPI_Init_thread */
-#ifndef SC_ENABLE_MPITHREAD
-#cmakedefine01 SC_ENABLE_MPITHREAD
-#endif
+#cmakedefine SC_ENABLE_MPITHREAD
 
 /* Define to 1 if we can use MPI_Win_allocate_shared */
-#ifndef SC_ENABLE_MPIWINSHARED
-#cmakedefine01 SC_ENABLE_MPIWINSHARED
-#endif
+#cmakedefine SC_ENABLE_MPIWINSHARED
 
 /* Undefine if: disable non-thread-safe internal debug counters */
-#ifndef SC_ENABLE_USE_COUNTERS
 #define SC_ENABLE_USE_COUNTERS 1
-#endif
+
 
 /* Undefine if: replace array/dmatrix resize with malloc/copy/free */
-#ifndef SC_ENABLE_USE_REALLOC
-#cmakedefine01 SC_ENABLE_USE_REALLOC
-#endif
+#cmakedefine SC_ENABLE_USE_REALLOC
 
 /* Define to 1 if you have the `aligned_alloc' function. */
-#ifndef SC_HAVE_ALIGNED_ALLOC
-#cmakedefine01 SC_HAVE_ALIGNED_ALLOC
-#endif
+#cmakedefine SC_HAVE_ALIGNED_ALLOC
 
 /* Define to 1 if you have the `backtrace' function. */
-#ifndef SC_HAVE_BACKTRACE
-#cmakedefine01 SC_HAVE_BACKTRACE
-#endif
+#cmakedefine SC_HAVE_BACKTRACE
 
 /* Define to 1 if you have the `backtrace_symbols' function. */
-#ifndef SC_HAVE_BACKTRACE_SYMBOLS
-#cmakedefine01 SC_HAVE_BACKTRACE_SYMBOLS
-#endif
+#cmakedefine SC_HAVE_BACKTRACE_SYMBOLS
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
-#ifndef SC_HAVE_DLFCN_H
-#cmakedefine01 SC_HAVE_DLFCN_H
-#endif
+// #cmakedefine SC_HAVE_DLFCN_H
 
 /* Define to 1 if you have the <execinfo.h> header file. */
-#ifndef SC_HAVE_EXECINFO_H
 #cmakedefine SC_HAVE_EXECINFO_H
-#endif
 
 /* Define to 1 if you have the `fsync' function. */
-#ifndef SC_HAVE_FSYNC
-#cmakedefine01 SC_HAVE_FSYNC
-#endif
+//#cmakedefine SC_HAVE_FSYNC
 
 /* Define to 1 if you have the <inttypes.h> header file. */
-#ifndef SC_HAVE_INTTYPES_H
-#cmakedefine01 SC_HAVE_INTTYPES_H
-#endif
+// cmakedefine SC_HAVE_INTTYPES_H
 
 
 /* Define to 1 if you have the <memory.h> header file. */
-#ifndef SC_HAVE_MEMORY_H
-#cmakedefine01 SC_HAVE_MEMORY_H
-#endif
+//#cmakedefine SC_HAVE_MEMORY_H
 
 
 
 /* Define to 1 if you have the `posix_memalign' function. */
-#ifndef SC_HAVE_POSIX_MEMALIGN
-#cmakedefine01 SC_HAVE_POSIX_MEMALIGN
-#endif
+#cmakedefine SC_HAVE_POSIX_MEMALIGN
 
 /* Define to 1 if you have the `qsort_r' function. */
-#ifndef SC_HAVE_QSORT_R
-#cmakedefine01 SC_HAVE_QSORT_R
-#endif
+// #cmakedefine SC_HAVE_QSORT_R
 
 /* Define to 1 if you have the <signal.h> header file. */
-#ifndef SC_HAVE_SIGNAL_H
 #cmakedefine SC_HAVE_SIGNAL_H
-#endif
-
-
-/* Define to 1 if you have the <stdint.h> header file. */
-#ifndef SC_HAVE_STDINT_H
-#cmakedefine01 SC_HAVE_STDINT_H
-#endif
-
-/* Define to 1 if you have the <stdlib.h> header file. */
-#ifndef SC_HAVE_STDLIB_H
-#cmakedefine01 SC_HAVE_STDLIB_H
-#endif
-
-/* Define to 1 if you have the <strings.h> header file. */
-#ifndef SC_HAVE_STRINGS_H
-#cmakedefine01 SC_HAVE_STRINGS_H
-#endif
-
-/* Define to 1 if you have the <string.h> header file. */
-#ifndef SC_HAVE_STRING_H
-#cmakedefine01 SC_HAVE_STRING_H
-#endif
 
 /* Define to 1 if you have the `strtol' function. */
-#ifndef SC_HAVE_STRTOL
-#cmakedefine01 SC_HAVE_STRTOL
-#endif
+//#cmakedefine SC_HAVE_STRTOL
 
 /* Define to 1 if you have the `strtoll' function. */
-#ifndef SC_HAVE_STRTOLL
-#cmakedefine01 SC_HAVE_STRTOLL
-#endif
+#cmakedefine SC_HAVE_STRTOLL
 
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
-#ifndef SC_HAVE_SYS_STAT_H
-#cmakedefine01 SC_HAVE_SYS_STAT_H
-#endif
+//#cmakedefine SC_HAVE_SYS_STAT_H
 
 /* Define to 1 if you have the <sys/time.h> header file. */
-#ifndef SC_HAVE_SYS_TIME_H
-#cmakedefine01 SC_HAVE_SYS_TIME_H
-#endif
+#cmakedefine SC_HAVE_SYS_TIME_H
 
 /* Define to 1 if you have the <sys/types.h> header file. */
-#ifndef SC_HAVE_SYS_TYPES_H
-#cmakedefine01 SC_HAVE_SYS_TYPES_H
-#endif
+#cmakedefine SC_HAVE_SYS_TYPES_H
 
 /* Define to 1 if you have the <time.h> header file. */
-#ifndef SC_HAVE_TIME_H
-#cmakedefine01 SC_HAVE_TIME_H
-#endif
+#cmakedefine SC_HAVE_TIME_H
 
 
 /* desired alignment of allocations in bytes */
-#ifndef SC_MEMALIGN_BYTES
 #define SC_MEMALIGN_BYTES (SC_SIZEOF_VOID_P)
-#endif
 
 /* Define to 1 if you have the <unistd.h> header file. */
-#ifndef SC_HAVE_UNISTD_H
-#cmakedefine01 SC_HAVE_UNISTD_H
-#endif
+#cmakedefine SC_HAVE_UNISTD_H
 
 /* Have we found function adler32_combine. */
-#ifndef SC_HAVE_ZLIB
-#cmakedefine01 SC_HAVE_ZLIB
-#endif
+#cmakedefine SC_HAVE_ZLIB
 
 /* Linker flags */
 #ifndef SC_LDFLAGS
@@ -234,31 +160,6 @@
 #define SC_PACKAGE_VERSION "2.8.1.57-a813"
 #endif
 
-
-/* The size of `int', as computed by sizeof. */
-#ifndef SC_SIZEOF_INT
-#define SC_SIZEOF_INT @SC_SIZEOF_INT@
-#endif
-
-/* The size of `long', as computed by sizeof. */
-#ifndef SC_SIZEOF_LONG
-#define SC_SIZEOF_LONG @SC_SIZEOF_LONG@
-#endif
-
-/* The size of `long long', as computed by sizeof. */
-#ifndef SC_SIZEOF_LONG_LONG
-#define SC_SIZEOF_LONG_LONG @SC_SIZEOF_LONG_LONG@
-#endif
-
-/* The size of `unsigned long', as computed by sizeof. */
-#ifndef SC_SIZEOF_UNSIGNED_LONG
-#define SC_SIZEOF_UNSIGNED_LONG @SC_SIZEOF_UNSIGNED_LONG@
-#endif
-
-/* The size of `unsigned long long', as computed by sizeof. */
-#ifndef SC_SIZEOF_UNSIGNED_LONG_LONG
-#define SC_SIZEOF_UNSIGNED_LONG_LONG @SC_SIZEOF_UNSIGNED_LONG_LONG@
-#endif
 
 /* The size of `void *', as computed by sizeof. */
 #ifndef SC_SIZEOF_VOID_P
