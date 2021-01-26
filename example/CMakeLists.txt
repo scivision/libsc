@@ -1,4 +1,5 @@
-set(tests bspline dmatrix function warp)
+set(exs bspline dmatrix function warp)
+set(tests dmatrix function warp)
 
 foreach(e ${tests})
 
@@ -12,7 +13,7 @@ foreach(e ${tests})
     target_link_libraries(sc_${e} PRIVATE MPI::MPI_C)
   endif()
 
-  if(NOT ${e} IN_LIST tests)
+  if(${e} IN_LIST tests)
   add_test(NAME sc:example:${e} COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} $<TARGET_FILE:sc_${e}>)
   endif()
 
