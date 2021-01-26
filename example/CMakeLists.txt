@@ -1,4 +1,6 @@
-foreach(e dmatrix function)
+set(tests bspline dmatrix function warp)
+
+foreach(e ${tests})
 
   add_executable(sc_${e} ${e}/${e}.c)
   target_include_directories(sc_${e} PRIVATE ${PROJECT_SOURCE_DIR}/src ${PROJECT_BINARY_DIR}/include)
@@ -10,6 +12,8 @@ foreach(e dmatrix function)
     target_link_libraries(sc_${e} PRIVATE MPI::MPI_C)
   endif()
 
+  if(NOT ${e} IN_LIST tests)
   add_test(NAME sc:example:${e} COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} $<TARGET_FILE:sc_${e}>)
+  endif()
 
 endforeach()
