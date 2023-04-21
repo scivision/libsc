@@ -9,13 +9,9 @@ sc_keyvalue.c sc_refcount.c sc_shmem.c
 sc_allgather.c sc_reduce.c sc_notify.c
 sc_uint128.c sc_v4l2.c
 sc_puff.c
+$<$<NOT:$<BOOL:${SC_HAVE_GETTIMEOFDAY}>>:${CMAKE_CURRENT_SOURCE_DIR}/sc_builtin/gettimeofday.c>
 )
 
 if(SC_HAVE_GETOPT_H)
   target_sources(sc PRIVATE sc_options.c sc_getopt.c sc_getopt1.c)
-endif()
-
-if(SC_HAVE_WINSOCK2_H)
-  target_sources(sc PRIVATE sc_builtin/gettimeofday.c)
-  target_link_libraries(sc PRIVATE ${WINSOCK_LIBRARIES})
 endif()

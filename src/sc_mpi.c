@@ -29,9 +29,8 @@
 /* time.h is already included by sc.h */
 #ifdef SC_HAVE_SYS_TIME_H
 #include <sys/time.h>
-#endif
-#if defined(SC_HAVE_WINSOCK2_H)
-#include <Winsock2.h>
+#elif !defined(SC_HAVE_GETTIMEOFDAY)
+#include "gettimeofday.h"
 #endif
 
 int

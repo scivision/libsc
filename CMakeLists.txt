@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14...3.25)
+cmake_minimum_required(VERSION 3.14...3.26)
 
 include(cmake/git.cmake)
 
@@ -46,6 +46,7 @@ target_link_libraries(sc PUBLIC
 $<$<BOOL:${SC_ENABLE_MPI}>:MPI::MPI_C>
 $<$<BOOL:${SC_HAVE_ZLIB}>:ZLIB::ZLIB>
 $<$<BOOL:${SC_NEED_M}>:m>
+PRIVATE $<$<BOOL:${SC_HAVE_WINSOCK2_H}>:${WINSOCK_LIBRARIES}>
 )
 
 # imported target, for use from FetchContent

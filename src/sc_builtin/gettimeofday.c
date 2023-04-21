@@ -1,10 +1,12 @@
 /* public domain: https://stackoverflow.com/a/26085827 */
 
 #define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+#include <winsock2.h>
 #include <stdint.h>             /* portable: uint64_t   MSVC: __int64 */
 
-/* MSVC defines this in winsock2.h!? */
+/* MSVC defines tv_*, tz_* in winsock2.h, but not timeval or timezone */
+/* MSYS2 & MinGW have timeval and timezone */
+#ifdef _MSC_VER
 typedef struct timeval
 {
   long                tv_sec;
@@ -16,6 +18,7 @@ struct timezone
   int                 tz_minuteswest;
   int                 tz_dsttime;
 };
+#endif
 
 int
 gettimeofday (struct timeval *tp, struct timezone *tzp)
