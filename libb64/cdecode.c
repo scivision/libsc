@@ -50,8 +50,6 @@ base64_decode_block (const char *code_in, size_t length_in,
 
   switch (state_in->step) {
 
-#pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
-
     while (1) {
   case step_a:
       do {
@@ -63,6 +61,7 @@ base64_decode_block (const char *code_in, size_t length_in,
         fragment = base64_decode_value (*codechar++);
       } while (fragment < 0);
       *plainchar = (char) ((fragment & 0x03f) << 2);
+      SC_FALLTHROUGH;
   case step_b:
       do {
         if (codechar == code_in + length_in) {
@@ -75,6 +74,7 @@ base64_decode_block (const char *code_in, size_t length_in,
       *plainchar = (char) (*plainchar | ((fragment & 0x030) >> 4));
       ++plainchar;
       *plainchar = (char) ((fragment & 0x00f) << 4);
+      SC_FALLTHROUGH;
   case step_c:
       do {
         if (codechar == code_in + length_in) {
@@ -87,6 +87,7 @@ base64_decode_block (const char *code_in, size_t length_in,
       *plainchar = (char) (*plainchar | ((fragment & 0x03c) >> 2));
       ++plainchar;
       *plainchar = (char) ((fragment & 0x003) << 6);
+      SC_FALLTHROUGH;
   case step_d:
       do {
         if (codechar == code_in + length_in) {

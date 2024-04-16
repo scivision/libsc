@@ -17,6 +17,17 @@ For details, see http://sourceforge.net/projects/libb64
 #ifndef BASE64_CDECODE_H
 #define BASE64_CDECODE_H
 
+#ifndef __has_c_attribute
+#define __has_c_attribute(x) 0
+#endif
+#if __has_c_attribute(fallthrough)
+#define SC_FALLTHROUGH [[fallthrough]]
+#elif defined(__GNUC__) && __GNUC__ >= 7 || defined(__clang__) && __clang_major__ >= 12
+#define SC_FALLTHROUGH __attribute__((fallthrough))
+#else
+#define SC_FALLTHROUGH
+#endif
+
 #ifdef __cplusplus
 extern              "C"
 {
