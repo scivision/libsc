@@ -131,14 +131,13 @@ jobs:
           ./build/Testing/Temporary/LastTest.log
 
   mac:
-    runs-on: macos-14
+    runs-on: macos-latest
     name: macOS mpi=${{ matrix.mpi }} CC=${{ matrix.cc }} shared=${{ matrix.shared }}
     timeout-minutes: 60
 
     strategy:
       matrix:
-        cc: [clang]
-# gcc-13 is broken in general for macOS GItHub Actions, but works fine on real computers.
+        cc: [clang, gcc-14]
         mpi: [true]
         shared: [false]
 # shared=true is not common usage, but let's test one case of it
