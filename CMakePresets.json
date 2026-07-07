@@ -4,9 +4,10 @@
 "configurePresets": [
 {
   "name": "default",
-  "binaryDir": "${sourceDir}/build",
+  "binaryDir": "build",
+  "installDir": "build/local",
+  "generator": "Ninja",
   "cacheVariables": {
-    "SC_ENABLE_MPI": true,
     "CMAKE_COMPILE_WARNING_AS_ERROR": true
     }
 }
@@ -29,7 +30,7 @@
     "noTestsAction": "error",
     "scheduleRandom": true,
     "stopOnFailure": false,
-    "timeout": 60
+    "jobs": 0
   },
   "filter": {
     "exclude": {

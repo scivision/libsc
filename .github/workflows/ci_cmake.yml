@@ -15,11 +15,6 @@ on:
     types: [published]
 
 env:
-  CTEST_NO_TESTS_ACTION: "error"
-  CMAKE_BUILD_PARALLEL_LEVEL: 4
-  CTEST_PARALLEL_LEVEL: 0
-  CMAKE_INSTALL_PREFIX: ~/local
-  CMAKE_PREFIX_PATH: ~/local
   # Due to busy file system problems on the CI runners, we deactivate the file
   # checks in the CI.
   SC_CI_CONFIG_OPT: -DSC_ENABLE_FILE_CHECKS=OFF
@@ -47,36 +42,8 @@ jobs:
       CC: ${{ matrix.cc }}
 
     steps:
-    - uses: actions/checkout@v4
-      name: Checkout source code
-
-    - name: Install system dependencies
-      if: ${{ matrix.mpi }}
-      run: |
-        sudo apt-get update
-        sudo apt-get install --no-install-recommends \
-            libmpich-dev mpich
-
-    - name: CMake composite steps (build, test, install, examples)
-      uses: ./.github/workflows/composite-cmake
-
-
-  ubuntu-22:
-    runs-on: ubuntu-22.04
-    name: Linux mpi=${{ matrix.mpi }} CC=${{ matrix.cc }} shared=${{ matrix.shared }}
-    timeout-minutes: 60
-
-    strategy:
-      matrix:
-        cc: [gcc]
-        shared: [false]
-        mpi: [true]
-
-    env:
-      CC: ${{ matrix.cc }}
-
-    steps:
-    - uses: actions/checkout@v4
+    - &checkout
+      uses: actions/checkout@v6
       name: Checkout source code
 
     - name: Install system dependencies
@@ -112,8 +79,7 @@ jobs:
         sudo apt-get install -yq --no-install-recommends \
             libmpich-dev mpich valgrind
 
-    - name: Checkout source code
-      uses: actions/checkout@v4
+    - *checkout
 
     - name: CMake configure
       run: |
@@ -137,28 +103,22 @@ jobs:
           ./build/Testing/Temporary/LastTest.log
 
   mac:
-    runs-on: macos-14
+    runs-on: macos-latest
     name: macOS mpi=${{ matrix.mpi }} CC=${{ matrix.cc }} shared=${{ matrix.shared }}
     timeout-minutes: 60
 
     strategy:
       matrix:
         cc: [clang]
-# gcc-13 is broken in general for macOS GItHub Actions, but works fine on real computers.
         mpi: [true]
-        shared: [false]
-# shared=true is not common usage, but let's test one case of it
-        include:
-        - shared: true
-          cc: clang
+        shared: [false, true]
 
     env:
       HOMEBREW_NO_INSTALL_CLEANUP: 1
       CC: ${{ matrix.cc }}
 
     steps:
-    - uses: actions/checkout@v4
-      name: Checkout source code
+    - *checkout
 
     - name: Install system dependencies
       run: brew install open-mpi
@@ -174,57 +134,14 @@ jobs:
     strategy:
       matrix:
         shared: [false]
+        mpi: [false]
     # GitHub Action Windows shared libs is generally broken, even with MSYS2, but works on real laptops etc.
 
     env:
-      CMAKE_GENERATOR: "MinGW Makefiles"
+      CMAKE_GENERATOR: Ninja
 
     steps:
-    - uses: actions/checkout@v4
-      name: Checkout source code
+    - *checkout
 
-    - run: echo "CMAKE_INSTALL_PREFIX=$HOME/local" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
-    - run: echo "CMAKE_PREFIX_PATH=$HOME/local" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
-    - name: CMake configure without MPI
-      # We must use $env:SC_CI_CONFIG_OPT instead of $SC_CI_CONFIG_OPT
-      # due to Windows PowerShell.
-      run: cmake --preset default -DSC_ENABLE_MPI:BOOL=no `
-                 -DSC_BUILD_SHARED_LIBS:BOOL=${{ matrix.shared }} `
-                 $env:SC_CI_CONFIG_OPT
-
-    - name: CMake build
-      run: cmake --build --preset default --parallel
-
-    - name: CMake Test
-      run: ctest --preset default
-
-    - name: CMake install (for examples)
-      run: cmake --install build
-
-    - name: CMake configure examples without MPI
-      run: cmake -B example/build -S example $env:SC_CI_CONFIG_OPT
-
-    - name: CMake build examples
-      run: cmake --build example/build --parallel
-
-    - name: Create package
-      if: github.event.action == 'published'
-      run: cpack --config build/CPackConfig.cmake
-
-    - name: Upload package
-      if: github.event.action == 'published'
-      uses: actions/upload-artifact@v4
-      with:
-        name: windows-binary-archive
-        path: build/package
-
-    - name: Upload log files
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: windows_cmake_log
-        path: |
-          ./build/CMakeFiles/CMakeConfigureLog.yaml
-          ./build/Testing/Temporary/LastTest.log
+    - name: CMake composite steps (build, test, install, examples)
+      uses: ./.github/workflows/composite-cmake

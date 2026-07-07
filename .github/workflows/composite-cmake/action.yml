@@ -1,3 +1,6 @@
+name: CMake build and test
+description: CMake build and test workflow
+
 runs:
   using: "composite"
 
@@ -20,25 +23,18 @@ runs:
             $SC_CI_CONFIG_OPT \
             --debug-find --fresh
 
-  - name: CMake build
+  - name: CMake build and test
     shell: bash
-    run: cmake --build --preset default
-
-  - name: CMake Test
-    shell: bash
-    run: ctest --preset default
+    run: cmake --workflow default
 
   - name: CMake install (for examples)
     shell: bash
     run: cmake --install build
 
-  - name: CMake configure examples
+  - name: CMake build and test examples
     shell: bash
-    run: cmake -B example/build -S example
-
-  - name: CMake build examples
-    shell: bash
-    run: cmake --build example/build
+    run: cmake --workflow default
+    working-directory: example
 
   - name: Create package
     shell: bash
@@ -47,14 +43,14 @@ runs:
 
   - name: Upload package
     if: github.event.action == 'published'
-    uses: actions/upload-artifact@v4
+    uses: actions/upload-artifact@v7
     with:
       name: ${{ github.job }}-binary-archive-${{ matrix.cc }}-mpi-${{ matrix.mpi }}-shared-${{ matrix.shared }}
       path: build/package
 
   - name: Upload log files
     if: always()
-    uses: actions/upload-artifact@v4
+    uses: actions/upload-artifact@v7
     with:
       name: ${{ github.job }}_cmake_log-${{ matrix.cc }}-mpi-${{ matrix.mpi }}-shared-${{ matrix.shared }}
       path: |
